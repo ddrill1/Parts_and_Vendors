@@ -1,0 +1,119 @@
+﻿body {
+    background-color: beige;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-attachment: fixed;
+    background-position: center center;
+    font-family: 'Arial Rounded MT';
+    padding: 4px;
+}
+
+#butBar {
+    border-width:1px;
+    background-color: aliceblue;
+    position: absolute;
+    width: 1300px;
+    height: 700px;
+    left: 5%;
+    top: 5%;
+    
+    margin: auto;
+}
+#butGo {
+    background-color: lightsteelblue;
+    left: 335px;
+    top: 10px;
+}
+#butDiv {
+    background-color: steelblue;
+    position: absolute;
+    top:50px;
+    width: 150px;
+    height: 650px;
+    margin: auto;
+    top:50px;
+}
+#filterDiv {
+    background-color: slategray;
+    position:absolute;
+    left:0px;
+    width:1300px;
+    height: 50px;
+}
+#viewDiv {
+    position:absolute;
+    left:150px;
+    top:50px;
+    width:1150px;
+    height:750px;
+}
+#masterDiv {
+    background-color: lightgrey;
+    height: 603px;
+}
+#grdMaster {
+    height:399px;
+    width:748px;
+    overflow: hidden;
+    white-space:nowrap;
+    word-break:break-all;
+}
+.masterGrid {
+    position: absolute;
+    left: 15px;
+    top: 60px;
+    width: 750px;
+    height: 400px;
+    overflow:scroll;
+}
+.menuButtons {
+    width: 150px;
+    margin: auto;
+}
+.menuButtonMaster {
+    background-color: dodgerblue; 
+    height: 216px;
+}
+.menuButtonsParts {
+    background-color: mediumseagreen;
+    height: 216px;
+}
+.menuButtonVendors {
+    background-color: darkgoldenrod;
+    height: 217px;
+}
+.searchDropDown {
+    font-size: 13px;
+    background-color: blanchedalmond;
+    position: absolute;
+    width: 220px;
+    padding: 5px 8px 5px 5px;
+    border: 1px solid lightsteelblue;
+    border-radius: 6px;
+    overflow: hidden;
+}
+.searchDropDownSearchBy {
+    left: 20px;
+    top: 10px;
+}
+.searchDropDownSearchFor {
+    left: 265px;
+    top: 10px;
+}
+.searchButton {
+    background-color: lightblue;
+    position: absolute;
+    left: 500px;
+    top: 13px;
+    height: 24px;
+    border-radius: 8px;
+}
+.HeaderFreez {
+    position: relative;
+    top: expression(this.offsetParent.scrollTop);
+    z-index: 10;
+}
+
+
+
+
