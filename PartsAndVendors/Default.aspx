@@ -1,24 +1,60 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="PartsAndVendors.PVMain" %>
+<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="PartsAndVendors.PVMain" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <script src="Scripts/jquery-3.3.1.js"></script>
+    <script src="Scripts/jquery-ui-1.12.1.js"></script>
+    <script src="Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script src="Scripts/jquery.validate.js"></script>
     <script type="text/javascript">
-<%--        function displaySearchFor() {
-            var searchBy = document.getElementById("<%=drpSearchBy.ClientID%>");
-            var searchFor = document.getElementById("<%=drpSearchFor.ClientID%>");
-            var butSearch = document.getElementById("<%=butSearch.ClientID%>");
+            $(document).ready(function () {
+                $('#<%=txtSearchFor.ClientID%>').autocomplete({
+                    source: function (request, response) {
+                        $.ajax({
+                            type: "POST",
+                            url: "Default.aspx/fillText",
+                            data: '{field : "' + $('#<%=drpSearchBy.ClientID%>').val() + '", search: "' + $('#<%=txtSearchFor.ClientID%>').val() + '"}',
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function (r) {
+                                response(r.d);
+                            },
+                            error: function (result) {
+                                alert("Fail");
+                            }
+                        });
+                    }
+                });
+            });
+        function displayControls() {
+            $(document).ready(function () {
+                var drpSearchBy = $('#<%=drpSearchBy.ClientID%> option:selected').text();
+                var drpSearchFor = $('#<%=drpSearchFor.ClientID%>');
+                var butSearch = $('#<%=butSearch.ClientID%>');
+                var txtSearch = $('#<%=txtSearchFor.ClientID%>');
 
-            if (searchBy != "--Select Field--") {
-                searchFor.style.display = searchBy.value == "--Select Field--" ? "none" : "block";
-                butSearch.style.display = searchBy.value == "--Select Field--" ? "none" : "block";
-            }
+                if (drpSearchBy != '--Select Field--') {
+                    butSearch.show();
 
-            return false;--%>
+                    txtSearch
+                        .show()
+                        .focus()
+                        .select()
+                        .val('');
+
+                    drpSearchFor.hide();
+                }
+                else {
+                    txtSearch.hide();
+                    butSearch.hide();
+                }
+            });
+        }
     </script>
     <div id="butBar">
         <div id="filterDiv">
-            <asp:DropDownList ID="drpSearchBy" CssClass="searchDropDown searchDropDownSearchBy" runat="server" 
-                AppendDataBoundItems="true" AutoPostBack="true" OnSelectedIndexChanged="drpSearchBy_SelectedIndexChanged">
+            <asp:DropDownList ID="drpSearchBy" CssClass="searchDropDown searchDropDownSearchBy" onchange="displayControls()" runat="server" 
+                AutoPostBack="false">
                 <asp:ListItem>--Select Field--</asp:ListItem>
                 <asp:ListItem>Cage Code</asp:ListItem>
                 <asp:ListItem>COG</asp:ListItem>
@@ -27,17 +63,12 @@
                 <asp:ListItem>Parent Assembly</asp:ListItem>
                 <asp:ListItem>Part Number</asp:ListItem>
                 <asp:ListItem>Title</asp:ListItem>
+                <asp:ListItem>Ref(t)</asp:ListItem>
             </asp:DropDownList>
             <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true"></asp:ScriptManager>
-            <asp:UpdatePanel ID="UpdatePanel3" runat="server">
-                <ContentTemplate>
-                    <asp:DropDownList ID="drpSearchFor" CssClass="searchDropDown searchDropDownSearchFor" runat="server"></asp:DropDownList>
-                    <asp:Button ID="butSearch" CssClass="searchButton" runat="server" Text="Button" OnClick="butSearch_Click" />
-                </ContentTemplate>
-                <Triggers>
-                    <asp:AsyncPostBackTrigger ControlID="drpSearchBy" />
-                </Triggers>
-            </asp:UpdatePanel>
+            <asp:DropDownList ID="drpSearchFor" CssClass="searchDropDown searchDropDownSearchFor" runat="server"></asp:DropDownList>
+            <asp:TextBox ID="txtSearchFor" CssClass="txtSearchFor" runat="server"></asp:TextBox>
+            <asp:Button ID="butSearch" CssClass="searchButton" runat="server" Text="Button" OnClick="butSearch_Click" />
         </div>
         <div id="butDiv">
             <asp:Button ID="butMaster" CssClass="menuButtons menuButtonMaster" runat="server" />
@@ -78,7 +109,6 @@
                                             <SortedDescendingCellStyle BackColor="#CAC9C9" />
                                             <SortedDescendingHeaderStyle BackColor="#00547E" />
                                         </asp:GridView>
-                                        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:InteractiveMaterialManagementSystem_TestDBConnectionString %>" SelectCommand="SELECT [PartNum], [Title], [ParentAssy], [CageCode], [FSC], [NIIN], [Qty], [UI], [CurCost], [Ref(t)] AS column1, [UID], [SMR], [Comments] FROM [41BPartsList]"></asp:SqlDataSource>
                                     </asp:Panel>
                                 </div>
                             </div>
